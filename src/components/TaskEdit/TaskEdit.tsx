@@ -1,6 +1,5 @@
 import { createRef, FormEvent, useEffect, useState } from "react";
-import { TaskEditFormStyled, TaskLabelStyled, TaskUserSelectStyled }  from "./TaskEditStyled";
-import InputStyled from "../ui/InputStyled";
+import { TaskEditFormStyled, TaskEditInputStyled, TaskLabelStyled, TaskUserSelectStyled }  from "./TaskEditStyled";
 import ButtonStyled from "../ui/ButtonStyled";
 
 interface ITaskEditProps {
@@ -28,8 +27,6 @@ const TaskEdit: React.FC<ITaskEditProps> = ({
     onEdit(newTitle, userId);
   };
 
-/*************  ✨ Codeium Command ⭐  *************/
-/******  75b84596-eefb-48ed-a78f-32ff40c2b018  *******/
   const handleSelect: (userId: number) => void = (userId: number) => {
     setUserId(userId);
   };
@@ -38,7 +35,7 @@ const TaskEdit: React.FC<ITaskEditProps> = ({
     <TaskEditFormStyled onSubmit={handleEdit}>
         <TaskLabelStyled htmlFor="newTitle">
           New title
-          <InputStyled
+          <TaskEditInputStyled
             ref={inputRef}
             type="text"
             placeholder="Enter new task..."
