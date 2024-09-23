@@ -1,4 +1,4 @@
-import { Component, createRef, FormEvent } from "react";
+import { createRef, FormEvent, useEffect, useState } from "react";
 import TaskUserSelect from "../TaskUserSelect/TaskUserSelect";
 import "./TaskEdit.css";
 
@@ -8,40 +8,35 @@ interface ITaskEditProps {
   username: string | null;
 }
 
-interface ITaskEditState {
-  title: string;
-  userId: number;
-}
+const TaskEdit: React.FC<ITaskEditProps> = ({
+  onEdit,
+  title,
+  username,
+}) => {
+  const [userId, setUserId] = useState<number>(0);
 
-class TaskEdit extends Component<ITaskEditProps, ITaskEditState> {
-  constructor(props: ITaskEditProps) {
-    super(props);
-    this.state = {
-      title: props.title,
-      userId: 0,
-    };
-  }
-  private inputRef = createRef<HTMLInputElement>();
+  const inputRef = createRef<HTMLInputElement>();
 
-  private handleEdit: (e: FormEvent<HTMLFormElement>) => void = (e) => {
+  useEffect(() => {
+    inputRef.current!.value = title;
+  }, []); // eslint-disable-line
+
+  const handleEdit: (e: FormEvent<HTMLFormElement>) => void = (e) => {
     e.preventDefault();
-    const title = this.inputRef.current!.value;
-    this.props.onEdit(title, this.state.userId);
+    const newTitle = inputRef.current!.value;
+    onEdit(newTitle, userId);
   };
-  componentDidMount(): void {
-    this.inputRef.current!.value = this.props.title;
-  }
 
-  private handleSelect: (userId: number) => void = (userId: number) => {
-    this.setState({ ...this.state, userId });
+  const handleSelect: (userId: number) => void = (userId: number) => {
+    setUserId(userId);
   };
-  render() {
-    return (
-      <form onSubmit={this.handleEdit} className="task-form-edit fl-col">
+
+  return (
+    <form onSubmit={handleEdit} className="task-form-edit fl-col">
         <label htmlFor="newTitle" className="task-label fl-col">
           New title
           <input
-            ref={this.inputRef}
+            ref={inputRef}
             type="text"
             className="task-input-edit"
             placeholder="Enter new task..."
@@ -51,8 +46,8 @@ class TaskEdit extends Component<ITaskEditProps, ITaskEditState> {
         <label className="task-label fl-col">
           Author
           <TaskUserSelect
-            onSelect={this.handleSelect}
-            defaultValue={this.props.username}
+            onSelect={handleSelect}
+            defaultValue={username}
             className="task-edit-user-select"
           />
         </label>
@@ -60,8 +55,7 @@ class TaskEdit extends Component<ITaskEditProps, ITaskEditState> {
           Edit
         </button>
       </form>
-    );
-  }
+  )
 }
 
 export default TaskEdit;
