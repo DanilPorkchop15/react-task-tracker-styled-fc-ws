@@ -1,9 +1,8 @@
 import React from "react";
 import { ITask } from "../../types/Task.types";
 import Task from "../Task/Task";
-import "./TaskList.css";
 import styled from "styled-components";
-import { FlexStyled } from "../utils";
+import { FlexColStyled } from "../utils";
 
 interface ITaskListProps {
   tasks: ITask[];
@@ -12,7 +11,7 @@ interface ITaskListProps {
 }
 
 const TaskListStyled = styled.div`
-  ${FlexStyled}
+  ${FlexColStyled}
   margin-top: 20px;
 `
 
