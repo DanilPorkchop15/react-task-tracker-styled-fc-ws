@@ -3,6 +3,7 @@ import { ITask } from "../../types/Task.types";
 import Task from "../Task/Task";
 import "./TaskList.css";
 import styled from "styled-components";
+import { FlexStyled } from "../utils";
 
 interface ITaskListProps {
   tasks: ITask[];
@@ -10,13 +11,14 @@ interface ITaskListProps {
   onToggle: (id: number) => void;
 }
 
-const StyledTaskList = styled.div`
+const TaskListStyled = styled.div`
+  ${FlexStyled}
   margin-top: 20px;
 `
 
 const TaskList: React.FC<ITaskListProps> = ({ tasks, onDelete, onToggle }) => {
   return (
-    <div className="task-list fl-col">
+    <TaskListStyled>
       {tasks &&
         tasks.map((task) => (
           <Task
@@ -29,7 +31,7 @@ const TaskList: React.FC<ITaskListProps> = ({ tasks, onDelete, onToggle }) => {
             onToggle={onToggle}
           />
         ))}
-    </div>
+    </TaskListStyled>
   );
 };
 
