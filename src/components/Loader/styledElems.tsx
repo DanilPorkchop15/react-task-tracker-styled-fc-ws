@@ -6,7 +6,7 @@ const rotate = keyframes`
   }
 `;
 
-export const Loader = styled.div`
+export const StyledLoader = styled.div`
   width: 100px;
   height: 100px;
   background: linear-gradient(
@@ -34,5 +34,3 @@ export const Loader = styled.div`
   filter: blur(3px);
   animation: 2s ${rotate} linear infinite;
 `;
-
-export default Loader;
