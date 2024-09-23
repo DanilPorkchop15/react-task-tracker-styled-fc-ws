@@ -12,6 +12,7 @@ interface IUserSelectProps {
 const TaskUserSelect: React.FC<IUserSelectProps> = ({
   onSelect,
   defaultValue,
+  className
 }) => {
   const [users, setUsers] = useState<IUser[] | null>(null);
   const [selectedUser, setSelectedUser] = useState<IUser | null>(null);
@@ -44,6 +45,7 @@ const TaskUserSelect: React.FC<IUserSelectProps> = ({
       name="selectUser"
       onChange={handleSelect}
       value={selectedUser?.id ?? "default"}
+      className={className? className : ""}
     >
       <option value="default" disabled>
         Select user
