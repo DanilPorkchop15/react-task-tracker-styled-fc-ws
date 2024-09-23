@@ -2,12 +2,17 @@ import React from "react";
 import { ITask } from "../../types/Task.types";
 import Task from "../Task/Task";
 import "./TaskList.css";
+import styled from "styled-components";
 
 interface ITaskListProps {
   tasks: ITask[];
   onDelete: (id: number) => void;
   onToggle: (id: number) => void;
 }
+
+const StyledTaskList = styled.div`
+  margin-top: 20px;
+`
 
 const TaskList: React.FC<ITaskListProps> = ({ tasks, onDelete, onToggle }) => {
   return (
