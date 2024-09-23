@@ -74,7 +74,7 @@ const Task: FC<ITaskProps> = ({
               <ButtonStyled onClick={toggleEdit} disabled={username === null}>
                 {doEdit ? "Cancel" : "Edit"}
               </ButtonStyled>
-              <ButtonStyled danger onClick={handleDelete}>
+              <ButtonStyled $danger onClick={handleDelete}>
                 Delete
               </ButtonStyled>
             </TaskActionsStyled>

@@ -54,10 +54,10 @@ const TaskOptions: React.FC<ITaskProps> = ({ onAdd, onMarkEvent }) => {
       </TaskOptionsBlockStyled>
 
       <TaskOptionsBlockStyled>
-        <MarkAllButtonStyled success onClick={() => onMarkEvent(true)}>
+        <MarkAllButtonStyled $success onClick={() => onMarkEvent(true)}>
           Check all
         </MarkAllButtonStyled>
-        <UnmarkAllButtonStyled danger onClick={() => onMarkEvent(false)}>
+        <UnmarkAllButtonStyled $danger onClick={() => onMarkEvent(false)}>
           Uncheck all
         </UnmarkAllButtonStyled>
       </TaskOptionsBlockStyled>

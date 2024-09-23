@@ -1,10 +1,10 @@
 import styled from "styled-components";
 
-const ButtonStyled = styled.button<{ danger?: boolean; success?: boolean }>`
-  background-color: ${({ danger, success }) =>
-    danger
+const ButtonStyled = styled.button<{ $danger?: boolean; $success?: boolean }>`
+  background-color: ${({ $danger, $success }) =>
+    $danger
       ? "var(--danger-color)"
-      : success
+      : $success
       ? "var(--success-color)"
       : "var(--primary-color)"};
   color: var(--text-color);
