@@ -1,7 +1,12 @@
 import styled from "styled-components";
 
-const ButtonStyled = styled.button`
-  background-color: var(--primary-color);
+const ButtonStyled = styled.button<{ danger?: boolean; success?: boolean }>`
+  background-color: ${({ danger, success }) =>
+    danger
+      ? "var(--danger-color)"
+      : success
+      ? "var(--success-color)"
+      : "var(--primary-color)"};
   color: var(--text-color);
   border: none;
   padding: 10px 20px;
