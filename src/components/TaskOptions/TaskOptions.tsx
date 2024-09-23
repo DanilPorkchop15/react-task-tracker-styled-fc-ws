@@ -1,4 +1,4 @@
-import React, { ChangeEvent, Component } from "react";
+import React, { ChangeEvent } from "react";
 import "./TaskOptions.css";
 import TaskUserSelect from "../TaskUserSelect/TaskUserSelect";
 
@@ -7,71 +7,61 @@ interface ITaskProps {
   onMarkEvent: (value: boolean) => void;
 }
 
-interface ITaskState {
-  value: string;
-  userId: number | null;
-}
+const TaskOptions: React.FC<ITaskProps> = ({ onAdd, onMarkEvent }) => {
+  const [value, setValue] = React.useState<string>("");
+  const [userId, setUserId] = React.useState<number | null>(null);
 
-class TaskOptions extends Component<ITaskProps, ITaskState> {
-  constructor(props: ITaskProps) {
-    super(props);
-    this.state = {
-      value: "",
-      userId: null,
-    };
-  }
-
-  private handleAdd = () => {
-    if (this.state.value !== "" && this.state.userId) {
-      this.props.onAdd(this.state.value, this.state.userId);
-      this.setState({ ...this.state, value: "" });
+  const handleAdd = () => {
+    if (value.length > 0) {
+      alert(userId)
+      onAdd(value, userId ?? 1);
+      setValue("");
     }
   };
 
-  private handleChange: (e: ChangeEvent<HTMLInputElement>) => void = (e) => {
-    this.setState({ ...this.state, value: e.target.value });
-  };
-  private handleSelect: (userId: number) => void = (userId) => {
-    this.setState({ ...this.state, userId });
+  const handleChange: (e: ChangeEvent<HTMLInputElement>) => void = (e) => {
+    setValue(e.target.value);
   };
 
-  render(): React.ReactNode {
-    return (
-      <div className="task-options fl-col fl-center">
-        <div className="task-options-block fl a-center j-between">
-          <input
-            type="text"
-            className="task-input-new input"
-            placeholder="Enter new task..."
-            value={this.state.value}
-            onChange={this.handleChange}
-          />
-          <TaskUserSelect
-            onSelect={this.handleSelect}
-            className="task-options-user-select"
-          />
-          <button onClick={this.handleAdd} className="task-button-new button">
-            Add task
-          </button>
-        </div>
+  const handleSelect: (userId: number) => void = (userId) => {
+    setUserId(userId);
+  };
 
-        <div className="task-options-block fl a-center">
-          <button
-            className="task-options-mark-all button"
-            onClick={() => this.props.onMarkEvent(true)}
-          >
-            Check all
-          </button>
-          <button
-            className="task-options-unmark-all button"
-            onClick={() => this.props.onMarkEvent(false)}
-          >
-            Uncheck all
-          </button>
-        </div>
+  return (
+    <div className="task-options fl-col fl-center">
+      <div className="task-options-block fl a-center j-between">
+        <input
+          type="text"
+          className="task-input-new input"
+          placeholder="Enter new task..."
+          value={value}
+          onChange={handleChange}
+        />
+        <TaskUserSelect
+          onSelect={handleSelect}
+          className="task-options-user-select"
+        />
+        <button onClick={handleAdd} className="task-button-new button">
+          Add task
+        </button>
       </div>
-    );
-  }
-}
+
+      <div className="task-options-block fl a-center">
+        <button
+          className="task-options-mark-all button"
+          onClick={() => onMarkEvent(true)}
+        >
+          Check all
+        </button>
+        <button
+          className="task-options-unmark-all button"
+          onClick={() => onMarkEvent(false)}
+        >
+          Uncheck all
+        </button>
+      </div>
+    </div>
+  );
+};
 
 export default TaskOptions;
