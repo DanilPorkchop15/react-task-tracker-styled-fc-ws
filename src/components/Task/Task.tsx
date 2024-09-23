@@ -1,9 +1,15 @@
 import React, { FC, useState, useEffect } from "react";
 import { ITask } from "../../types/Task.types";
-import "./Task.css";
 import { fetchUser } from "../../services/User.service";
 import { updateTask } from "../../services/Task.service";
 import TaskEdit from "../TaskEdit/TaskEdit";
+import ButtonStyled from "../ui/ButtonStyled";
+import {
+  TaskActionsStyled,
+  TaskBlockStyled,
+  TaskSectionStyled,
+  TaskStyled,
+} from "./TaskStyled";
 
 interface ITaskProps extends ITask {
   onDelete: (id: number) => void;
@@ -44,19 +50,19 @@ const Task: FC<ITaskProps> = ({
   const toggleEdit = () => setDoEdit(!doEdit);
 
   return (
-    <div className="task fl-col j-between">
-      <section className="task-section fl a-baseline j-between">
-        <div className="task-block fl a-baseline">
+    <TaskStyled>
+      <TaskSectionStyled>
+        <TaskBlockStyled>
           <span>{id}</span>
           <p>{newTitle}</p>
-        </div>
+        </TaskBlockStyled>
 
-        <div className="task-block fl a-baseline">
-          <div className="task-block fl a-baseline">
+        <TaskBlockStyled>
+          <TaskBlockStyled>
             <span>{username ? username : "loading..."}</span>
-          </div>
+          </TaskBlockStyled>
 
-          <div className="task-block fl a-baseline">
+          <TaskBlockStyled>
             <input
               type="checkbox"
               name="completed"
@@ -64,28 +70,24 @@ const Task: FC<ITaskProps> = ({
               onChange={handleToggle}
               checked={completed}
             />
-            <div className="task-actions fl">
-              <button
-                className="task-edit button"
-                onClick={toggleEdit}
-                disabled={username === null}
-              >
+            <TaskActionsStyled>
+              <ButtonStyled onClick={toggleEdit} disabled={username === null}>
                 {doEdit ? "Cancel" : "Edit"}
-              </button>
-              <button className="task-delete button" onClick={handleDelete}>
+              </ButtonStyled>
+              <ButtonStyled danger onClick={handleDelete}>
                 Delete
-              </button>
-            </div>
-          </div>
-        </div>
-      </section>
+              </ButtonStyled>
+            </TaskActionsStyled>
+          </TaskBlockStyled>
+        </TaskBlockStyled>
+      </TaskSectionStyled>
 
-      <section className="task-section fl a-baseline j-between">
+      <TaskSectionStyled>
         {doEdit && (
           <TaskEdit onEdit={handleEdit} title={title} username={username} />
         )}
-      </section>
-    </div>
+      </TaskSectionStyled>
+    </TaskStyled>
   );
 };
 
