@@ -12,10 +12,11 @@ const TaskOptions: React.FC<ITaskProps> = ({ onAdd, onMarkEvent }) => {
   const [userId, setUserId] = React.useState<number | null>(null);
 
   const handleAdd = () => {
-    if (value.length > 0) {
-      alert(userId);
-      onAdd(value, userId ?? 1);
+    if (value.length > 0 && userId) {
+      onAdd(value, userId);
       setValue("");
+    } else {
+      alert("Введите текст и автора заметки!");
     }
   };
 
@@ -41,7 +42,7 @@ const TaskOptions: React.FC<ITaskProps> = ({ onAdd, onMarkEvent }) => {
           onSelect={handleSelect}
           className="task-options-user-select"
         />
-        <button onClick={handleAdd} className="task-button-new button">
+        <button onClick={handleAdd} className="task-button-new button" disabled={!userId || value.length === 0}>
           Add task
         </button>
       </div>
