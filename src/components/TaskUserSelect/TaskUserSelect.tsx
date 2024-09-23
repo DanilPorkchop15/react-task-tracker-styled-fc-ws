@@ -32,7 +32,7 @@ const TaskUserSelect: React.FC<IUserSelectProps> = ({
       .catch((e: Error) => {
         console.log("User fetch error " + e);
       });
-  }, []); // eslint-disable-line 
+  }, []); // eslint-disable-line
 
   const handleSelect: React.ChangeEventHandler<HTMLSelectElement> = (e) => {
     const selectedUser = users?.find((user) => user.id === +e.target.value);
@@ -47,7 +47,9 @@ const TaskUserSelect: React.FC<IUserSelectProps> = ({
       onChange={handleSelect}
       value={selectedUser?.id ?? "default"}
     >
-      <option value="default" disabled>Select user</option>
+      <option value="default" disabled>
+        Select user
+      </option>
       {users ? (
         users.map((user) => (
           <option value={user.id} key={user.id}>
