@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { IUser } from "../../types/User.types";
-import "./TaskUserSelect.css";
 import { fetchUsers } from "../../services/User.service";
+import { SelectStyled } from "./TaskUserSelectStyled";
 
 interface IUserSelectProps {
   onSelect: (userId: number) => void;
@@ -12,7 +12,6 @@ interface IUserSelectProps {
 const TaskUserSelect: React.FC<IUserSelectProps> = ({
   onSelect,
   defaultValue,
-  className,
 }) => {
   const [users, setUsers] = useState<IUser[] | null>(null);
   const [selectedUser, setSelectedUser] = useState<IUser | null>(null);
@@ -41,9 +40,8 @@ const TaskUserSelect: React.FC<IUserSelectProps> = ({
   };
 
   return (
-    <select
+    <SelectStyled
       name="selectUser"
-      className={`task-user-select ${className}`}
       onChange={handleSelect}
       value={selectedUser?.id ?? "default"}
     >
@@ -59,7 +57,7 @@ const TaskUserSelect: React.FC<IUserSelectProps> = ({
       ) : (
         <option value="loading">loading...</option>
       )}
-    </select>
+    </SelectStyled>
   );
 };
 
