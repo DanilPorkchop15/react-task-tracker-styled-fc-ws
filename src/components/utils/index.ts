@@ -1,31 +1,37 @@
-import styled from "styled-components";
+import { css } from "styled-components";
 
-const FlexStyled = styled.div`
+const FlexStyled = css`
   display: flex;
 `;
 
-const FlexColStyled = styled(FlexStyled)`
+const FlexColStyled = css`
+  ${FlexStyled}
   flex-direction: column;
 `;
 
-const FlexCenterStyled = styled(FlexStyled)`
+const FlexCenterStyled = css`
+  ${FlexStyled}
   justify-content: center;
   align-items: center;
 `;
 
-const AlignCenterStyled = styled(FlexStyled)`
+const AlignCenterStyled = css`
+  ${FlexStyled}
   align-items: center;
 `;
 
-const JustifyCenterStyled = styled(FlexStyled)`
+const JustifyCenterStyled = css`
+  ${FlexStyled}
   justify-content: center;
 `;
 
-const JustifyBetweenStyled = styled(FlexStyled)`
+const JustifyBetweenStyled = css`
+  ${FlexStyled}
   justify-content: space-between;
 `;
 
-const AlignBaselineStyled = styled(FlexStyled)`
+const AlignBaselineStyled = css`
+  ${FlexStyled}
   align-items: baseline;
 `;
 
