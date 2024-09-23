@@ -1,6 +1,7 @@
 import { createRef, FormEvent, useEffect, useState } from "react";
-import TaskUserSelect from "../TaskUserSelect/TaskUserSelect";
-import "./TaskEdit.css";
+import { TaskEditFormStyled, TaskLabelStyled, TaskUserSelectStyled }  from "./TaskEditStyled";
+import InputStyled from "../ui/InputStyled";
+import ButtonStyled from "../ui/ButtonStyled";
 
 interface ITaskEditProps {
   onEdit: (title: string, userId: number) => void;
@@ -32,29 +33,27 @@ const TaskEdit: React.FC<ITaskEditProps> = ({
   };
 
   return (
-    <form onSubmit={handleEdit} className="task-form-edit fl-col">
-        <label htmlFor="newTitle" className="task-label fl-col">
+    <TaskEditFormStyled onSubmit={handleEdit}>
+        <TaskLabelStyled htmlFor="newTitle">
           New title
-          <input
+          <InputStyled
             ref={inputRef}
             type="text"
-            className="task-input-edit"
             placeholder="Enter new task..."
             name="newTitle"
           />
-        </label>
-        <label className="task-label fl-col">
+        </TaskLabelStyled>
+        <TaskLabelStyled >
           Author
-          <TaskUserSelect
+          <TaskUserSelectStyled
             onSelect={handleSelect}
             defaultValue={username}
-            className="task-edit-user-select"
           />
-        </label>
-        <button type="submit" className="task-button-edit">
+        </TaskLabelStyled>
+        <ButtonStyled type="submit">
           Edit
-        </button>
-      </form>
+        </ButtonStyled>
+      </TaskEditFormStyled>
   )
 }
 
