@@ -13,7 +13,7 @@ const TaskOptions: React.FC<ITaskProps> = ({ onAdd, onMarkEvent }) => {
 
   const handleAdd = () => {
     if (value.length > 0) {
-      alert(userId)
+      alert(userId);
       onAdd(value, userId ?? 1);
       setValue("");
     }
