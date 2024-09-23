@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, {  FC } from "react";
 import TaskList from "../TaskList/TaskList";
 import TaskOptions from "../TaskOptions/TaskOptions";
 import { CreateTaskType, ITask } from "../../types/Task.types";
@@ -13,36 +13,25 @@ import Loader from "../Loader/Loader";
 
 interface ITaskProps {}
 
-interface ITaskState {
-  tasks: ITask[];
-}
+const TaskTracker: FC<ITaskProps> = () => {
+  const [tasks, setTasks] = React.useState<ITask[]>([]);
 
-class TaskTracker extends Component<ITaskProps, ITaskState> {
-  constructor(props: ITaskProps) {
-    super(props);
-    this.state = {
-      tasks: [],
-    };
-  }
-  componentDidMount(): void {
-    this.refreshTasks();
-  }
-  private refreshTasks(): void {
+  React.useEffect(() => {
     fetchTasks()
       .then((res: ITask[]) => {
-        this.setState({ tasks: res });
+        setTasks(res);
       })
       .catch((e: Error) => {
         alert("Ошибка получения задач!!!");
         console.log(e);
       });
-  }
+  }, []);
 
-  private handleAdd: (title: string, userId: number) => void = (
+  const handleAdd: (title: string, userId: number) => void = (
     title,
     userId
   ) => {
-    const updatedTasks: ITask[] = this.state.tasks.slice();
+    const updatedTasks: ITask[] = tasks.slice();
     const newTask: CreateTaskType = {
       title,
       userId,
@@ -51,14 +40,14 @@ class TaskTracker extends Component<ITaskProps, ITaskState> {
     addTask(newTask)
       .then((res: ITask) => {
         updatedTasks.unshift(res);
-        this.setState({ tasks: updatedTasks });
+        setTasks(updatedTasks);
       })
       .catch((e: Error) => {
         console.log("Add task error " + e);
       });
   };
 
-  private handleMarkAll: (value: boolean) => void = (value) => {
+  const handleMarkAll: (value: boolean) => void = (value) => {
     const doMarkAll = window.confirm(
       `Вы уверены, что хотите отметить все задачи как ${
         value ? "" : "не"
@@ -67,16 +56,15 @@ class TaskTracker extends Component<ITaskProps, ITaskState> {
 
     if (doMarkAll) {
       try {
-        const updatedTasks: ITask[] = this.state.tasks.map((task) => ({
+        const updatedTasks: ITask[] = tasks.map((task) => ({
           ...task,
           completed: value,
         }));
 
-        this.setState({ tasks: updatedTasks }, () => {
-          updatedTasks.forEach((task) => {
-            updateTask(task).catch((e: Error) => {
-              console.error(`Error updating task ${task.id}:`, e);
-            });
+        setTasks(updatedTasks);
+        updatedTasks.forEach((task) => {
+          updateTask(task).catch((e: Error) => {
+            console.error(`Error updating task ${task.id}:`, e);
           });
         });
       } catch (e) {
@@ -85,8 +73,8 @@ class TaskTracker extends Component<ITaskProps, ITaskState> {
     }
   };
 
-  private handleDelete: (id: number) => void = (id) => {
-    const updatedTasks: ITask[] = this.state.tasks.slice();
+  const handleDelete: (id: number) => void = (id) => {
+    const updatedTasks: ITask[] = tasks.slice();
     const doDelete = window.confirm("Вы уверены, что хотите удалить задачу?");
     doDelete &&
       deleteTask(id)
@@ -96,7 +84,7 @@ class TaskTracker extends Component<ITaskProps, ITaskState> {
             1
           );
 
-          this.setState({ tasks: updatedTasks });
+          setTasks(updatedTasks);
         })
         .catch((e: Error) => {
           alert("Возникла ошибка при удалении задачи!!!");
@@ -104,14 +92,14 @@ class TaskTracker extends Component<ITaskProps, ITaskState> {
         });
   };
 
-  private handleToggle: (id: number) => void = (id) => {
-    const updatedTasks: ITask[] = this.state.tasks.slice();
+  const handleToggle: (id: number) => void = (id) => {
+    const updatedTasks: ITask[] = tasks.slice();
     const task = updatedTasks.find((task) => task.id === id);
     if (task) {
       task.completed = !task.completed;
       updateTask(task)
         .then(() => {
-          this.setState({ tasks: updatedTasks });
+          setTasks(updatedTasks);
         })
         .catch((e: Error) => {
           console.error(`Error updating task ${task.id}:`, e);
@@ -120,25 +108,24 @@ class TaskTracker extends Component<ITaskProps, ITaskState> {
       console.error(`Task with id ${id} not found`);
     }
   };
-  render(): React.ReactNode {
-    return (
-      <div className="task-tracker fl-col a-center">
-        <h1 className="task-tracker-title">Task Tracker</h1>
-        <h2 className="task-tracker-title">Options</h2>
-        <TaskOptions onAdd={this.handleAdd} onMarkEvent={this.handleMarkAll} />
-        <h2 className="task-tracker-title">Tasks</h2>
-        {this.state.tasks && this.state.tasks.length > 0 ? (
-          <TaskList
-            tasks={this.state.tasks}
-            onDelete={this.handleDelete}
-            onToggle={this.handleToggle}
-          />
-        ) : (
-          <Loader />
-        )}
-      </div>
-    );
-  }
-}
+
+  return (
+    <div className="task-tracker fl-col a-center">
+      <h1 className="task-tracker-title">Task Tracker</h1>
+      <h2 className="task-tracker-title">Options</h2>
+      <TaskOptions onAdd={handleAdd} onMarkEvent={handleMarkAll} />
+      <h2 className="task-tracker-title">Tasks</h2>
+      {tasks && tasks.length > 0 ? (
+        <TaskList
+          tasks={tasks}
+          onDelete={handleDelete}
+          onToggle={handleToggle}
+        />
+      ) : (
+        <Loader />
+      )}
+    </div>
+  );
+};
 
 export default TaskTracker;
