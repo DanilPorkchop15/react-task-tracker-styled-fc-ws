@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import "./App.css";
+
 import TaskTracker from "./components/TaskTracker/TaskTracker";
 import styled from "styled-components";
 import { FlexCenterStyled, FlexColStyled } from "./components/utils";
