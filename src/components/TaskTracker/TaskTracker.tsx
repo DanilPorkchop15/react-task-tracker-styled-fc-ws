@@ -1,8 +1,7 @@
-import React, {  FC } from "react";
+import React, { FC } from "react";
 import TaskList from "../TaskList/TaskList";
 import TaskOptions from "../TaskOptions/TaskOptions";
 import { CreateTaskType, ITask } from "../../types/Task.types";
-import "./TaskTracker.css";
 import {
   addTask,
   deleteTask,
@@ -10,6 +9,7 @@ import {
   updateTask,
 } from "../../services/Task.service";
 import Loader from "../Loader/Loader";
+import { TaskTrackerStyled, TaskTrackerTitleH1, TaskTrackerTitleH2 } from "./TaskTrackerStyled";
 
 interface ITaskProps {}
 
@@ -110,11 +110,13 @@ const TaskTracker: FC<ITaskProps> = () => {
   };
 
   return (
-    <div className="task-tracker fl-col a-center">
-      <h1 className="task-tracker-title">Task Tracker</h1>
-      <h2 className="task-tracker-title">Options</h2>
+    <TaskTrackerStyled>
+      <TaskTrackerTitleH1>
+        Task Tracker
+      </TaskTrackerTitleH1>
+      <TaskTrackerTitleH2>Options</TaskTrackerTitleH2>
       <TaskOptions onAdd={handleAdd} onMarkEvent={handleMarkAll} />
-      <h2 className="task-tracker-title">Tasks</h2>
+      <TaskTrackerTitleH2>Tasks</TaskTrackerTitleH2>
       {tasks && tasks.length > 0 ? (
         <TaskList
           tasks={tasks}
@@ -124,7 +126,7 @@ const TaskTracker: FC<ITaskProps> = () => {
       ) : (
         <Loader />
       )}
-    </div>
+    </TaskTrackerStyled>
   );
 };
 
