@@ -1,19 +1,13 @@
 import React from "react";
 import { ITask } from "../../types/Task.types";
 import Task from "../Task/Task";
-import styled from "styled-components";
-import { FlexColStyled } from "../utils";
+import { TaskListStyled } from "./TaskListStyled";
 
 interface ITaskListProps {
   tasks: ITask[];
   onDelete: (id: number) => void;
   onToggle: (id: number) => void;
 }
-
-const TaskListStyled = styled.div`
-  ${FlexColStyled}
-  margin-top: 20px;
-`
 
 const TaskList: React.FC<ITaskListProps> = ({ tasks, onDelete, onToggle }) => {
   return (
@@ -35,4 +29,3 @@ const TaskList: React.FC<ITaskListProps> = ({ tasks, onDelete, onToggle }) => {
 };
 
 export default TaskList;
-
