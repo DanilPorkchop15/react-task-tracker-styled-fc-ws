@@ -1,6 +1,13 @@
 import React, { ChangeEvent } from "react";
-import "./TaskOptions.css";
-import TaskUserSelect from "../TaskUserSelect/TaskUserSelect";
+import {
+  MarkAllButtonStyled,
+  NewTaskButtonStyled,
+  NewTaskInputStyled,
+  TaskOptionsBlockStyled,
+  TaskOptionsStyled,
+  TaskOptionsUserSelectStyled,
+  UnmarkAllButtonStyled,
+} from "./TaskOptionsStyled";
 
 interface ITaskProps {
   onAdd: (value: string, userId: number) => void;
@@ -29,39 +36,32 @@ const TaskOptions: React.FC<ITaskProps> = ({ onAdd, onMarkEvent }) => {
   };
 
   return (
-    <div className="task-options fl-col fl-center">
-      <div className="task-options-block fl a-center j-between">
-        <input
+    <TaskOptionsStyled >
+      <TaskOptionsBlockStyled >
+        <NewTaskInputStyled
           type="text"
-          className="task-input-new input"
           placeholder="Enter new task..."
           value={value}
           onChange={handleChange}
         />
-        <TaskUserSelect
-          onSelect={handleSelect}
-          className="task-options-user-select"
-        />
-        <button onClick={handleAdd} className="task-button-new button" disabled={!userId || value.length === 0}>
+        <TaskOptionsUserSelectStyled onSelect={handleSelect} />
+        <NewTaskButtonStyled
+          onClick={handleAdd}
+          disabled={!userId || value.length === 0}
+        >
           Add task
-        </button>
-      </div>
+        </NewTaskButtonStyled>
+      </TaskOptionsBlockStyled>
 
-      <div className="task-options-block fl a-center">
-        <button
-          className="task-options-mark-all button"
-          onClick={() => onMarkEvent(true)}
-        >
+      <TaskOptionsBlockStyled>
+        <MarkAllButtonStyled success onClick={() => onMarkEvent(true)}>
           Check all
-        </button>
-        <button
-          className="task-options-unmark-all button"
-          onClick={() => onMarkEvent(false)}
-        >
+        </MarkAllButtonStyled>
+        <UnmarkAllButtonStyled danger onClick={() => onMarkEvent(false)}>
           Uncheck all
-        </button>
-      </div>
-    </div>
+        </UnmarkAllButtonStyled>
+      </TaskOptionsBlockStyled>
+    </TaskOptionsStyled>
   );
 };
 
