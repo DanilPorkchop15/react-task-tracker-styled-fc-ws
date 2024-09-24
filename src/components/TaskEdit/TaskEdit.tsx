@@ -23,7 +23,11 @@ const TaskEdit: FC<TaskEditProps> = ({
 
   const handleEdit: (e: FormEvent<HTMLFormElement>) => void = (e) => {
     e.preventDefault();
-    const newTitle = inputRef.current!.value;
+    const inputElement = inputRef.current;
+    if (!inputElement) {
+      return;
+    }
+    const newTitle = inputElement.value;
     onEdit(newTitle, userId);
   };
 
