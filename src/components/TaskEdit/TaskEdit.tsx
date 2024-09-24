@@ -1,14 +1,14 @@
-import { createRef, FormEvent, useEffect, useState } from "react";
+import { createRef, FC, FormEvent, useEffect, useState } from "react";
 import { TaskEditFormStyled, TaskEditInputStyled, TaskLabelStyled, TaskUserSelectStyled }  from "./TaskEditStyled";
 import ButtonStyled from "../ui/ButtonStyled";
 
-interface ITaskEditProps {
+interface TaskEditProps {
   onEdit: (title: string, userId: number) => void;
   title: string;
   username: string | null;
 }
 
-const TaskEdit: React.FC<ITaskEditProps> = ({
+const TaskEdit: FC<TaskEditProps> = ({
   onEdit,
   title,
   username,

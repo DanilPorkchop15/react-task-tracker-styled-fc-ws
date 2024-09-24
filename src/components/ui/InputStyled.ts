@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const InputStyled = styled.input`
+const InputStyled= styled.input`
   padding: 10px;
   outline: none;
   border-radius: 10px;

@@ -1,4 +1,4 @@
-import React, { ChangeEvent } from "react";
+import { ChangeEvent, FC, useState } from "react";
 import {
   MarkAllButtonStyled,
   NewTaskButtonStyled,
@@ -9,14 +9,14 @@ import {
   UnmarkAllButtonStyled,
 } from "./TaskOptionsStyled";
 
-interface ITaskProps {
+interface TaskProps {
   onAdd: (value: string, userId: number) => void;
   onMarkEvent: (value: boolean) => void;
 }
 
-const TaskOptions: React.FC<ITaskProps> = ({ onAdd, onMarkEvent }) => {
-  const [value, setValue] = React.useState<string>("");
-  const [userId, setUserId] = React.useState<number | null>(null);
+const TaskOptions: FC<TaskProps> = ({ onAdd, onMarkEvent }) => {
+  const [value, setValue] = useState<string>("");
+  const [userId, setUserId] = useState<number | null>(null);
 
   const handleAdd = () => {
     if (value.length > 0 && userId) {

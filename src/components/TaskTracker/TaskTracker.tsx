@@ -1,7 +1,7 @@
-import React, { FC } from "react";
+import { FC, useEffect, useState } from "react";
 import TaskList from "../TaskList/TaskList";
 import TaskOptions from "../TaskOptions/TaskOptions";
-import { CreateTaskType, ITask } from "../../types/Task.types";
+import { CreateTask, Task } from "../../types/Task.types";
 import {
   addTask,
   deleteTask,
@@ -11,14 +11,12 @@ import {
 import Loader from "../Loader/Loader";
 import { TaskTrackerStyled, TaskTrackerTitleH1, TaskTrackerTitleH2 } from "./TaskTrackerStyled";
 
-interface ITaskProps {}
+const TaskTracker: FC = () => {
+  const [tasks, setTasks] = useState<Task[]>([]);
 
-const TaskTracker: FC<ITaskProps> = () => {
-  const [tasks, setTasks] = React.useState<ITask[]>([]);
-
-  React.useEffect(() => {
+  useEffect(() => {
     fetchTasks()
-      .then((res: ITask[]) => {
+      .then((res: Task[]) => {
         setTasks(res);
       })
       .catch((e: Error) => {
@@ -31,14 +29,14 @@ const TaskTracker: FC<ITaskProps> = () => {
     title,
     userId
   ) => {
-    const updatedTasks: ITask[] = tasks.slice();
-    const newTask: CreateTaskType = {
+    const updatedTasks: Task[] = tasks.slice();
+    const newTask: CreateTask = {
       title,
       userId,
       completed: false,
     };
     addTask(newTask)
-      .then((res: ITask) => {
+      .then((res: Task) => {
         updatedTasks.unshift(res);
         setTasks(updatedTasks);
       })
@@ -56,7 +54,7 @@ const TaskTracker: FC<ITaskProps> = () => {
 
     if (doMarkAll) {
       try {
-        const updatedTasks: ITask[] = tasks.map((task) => ({
+        const updatedTasks: Task[] = tasks.map((task) => ({
           ...task,
           completed: value,
         }));
@@ -74,7 +72,7 @@ const TaskTracker: FC<ITaskProps> = () => {
   };
 
   const handleDelete: (id: number) => void = (id) => {
-    const updatedTasks: ITask[] = tasks.slice();
+    const updatedTasks: Task[] = tasks.slice();
     const doDelete = window.confirm("Вы уверены, что хотите удалить задачу?");
     doDelete &&
       deleteTask(id)
@@ -93,7 +91,7 @@ const TaskTracker: FC<ITaskProps> = () => {
   };
 
   const handleToggle: (id: number) => void = (id) => {
-    const updatedTasks: ITask[] = tasks.slice();
+    const updatedTasks: Task[] = tasks.slice();
     const task = updatedTasks.find((task) => task.id === id);
     if (task) {
       task.completed = !task.completed;
@@ -131,3 +129,4 @@ const TaskTracker: FC<ITaskProps> = () => {
 };
 
 export default TaskTracker;
+

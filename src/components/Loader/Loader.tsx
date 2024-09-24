@@ -6,7 +6,7 @@ const rotate = keyframes`
   }
 `;
 
-export const Loader = styled.div`
+export const Loader: React.FC = styled.div`
   width: 100px;
   height: 100px;
   background: linear-gradient(

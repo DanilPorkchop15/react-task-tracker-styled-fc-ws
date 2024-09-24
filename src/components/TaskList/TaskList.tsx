@@ -1,15 +1,15 @@
-import React from "react";
-import { ITask } from "../../types/Task.types";
+import { FC } from "react";
+import { Task as ITask } from "../../types/Task.types";
 import Task from "../Task/Task";
 import { TaskListStyled } from "./TaskListStyled";
 
-interface ITaskListProps {
+interface TaskListProps {
   tasks: ITask[];
   onDelete: (id: number) => void;
   onToggle: (id: number) => void;
 }
 
-const TaskList: React.FC<ITaskListProps> = ({ tasks, onDelete, onToggle }) => {
+const TaskList: FC<TaskListProps> = ({ tasks, onDelete, onToggle }) => {
   return (
     <TaskListStyled>
       {tasks &&

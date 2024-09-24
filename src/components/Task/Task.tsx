@@ -1,5 +1,5 @@
-import React, { FC, useState, useEffect } from "react";
-import { ITask } from "../../types/Task.types";
+import { FC, useState, useEffect } from "react";
+import { Task as ITask } from "../../types/Task.types";
 import { fetchUser } from "../../services/User.service";
 import { updateTask } from "../../services/Task.service";
 import TaskEdit from "../TaskEdit/TaskEdit";
@@ -11,12 +11,12 @@ import {
   TaskStyled,
 } from "./TaskStyled";
 
-interface ITaskProps extends ITask {
+interface TaskProps extends ITask {
   onDelete: (id: number) => void;
   onToggle: (id: number) => void;
 }
 
-const Task: FC<ITaskProps> = ({
+const Task: FC<TaskProps> = ({
   id,
   title,
   completed,

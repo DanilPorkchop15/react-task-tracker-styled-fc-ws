@@ -1,21 +1,21 @@
-import React, { useEffect, useState } from "react";
-import { IUser } from "../../types/User.types";
+import { FC, useEffect, useState } from "react";
+import { User } from "../../types/User.types";
 import { fetchUsers } from "../../services/User.service";
 import { SelectStyled } from "./TaskUserSelectStyled";
 
-interface IUserSelectProps {
+interface UserSelectProps {
   onSelect: (userId: number) => void;
   defaultValue?: string | null;
   className?: string | null;
 }
 
-const TaskUserSelect: React.FC<IUserSelectProps> = ({
+const TaskUserSelect: FC<UserSelectProps> = ({
   onSelect,
   defaultValue,
-  className
+  className,
 }) => {
-  const [users, setUsers] = useState<IUser[] | null>(null);
-  const [selectedUser, setSelectedUser] = useState<IUser | null>(null);
+  const [users, setUsers] = useState<User[] | null>(null);
+  const [selectedUser, setSelectedUser] = useState<User | null>(null);
 
   useEffect(() => {
     fetchUsers()
@@ -36,7 +36,7 @@ const TaskUserSelect: React.FC<IUserSelectProps> = ({
 
   const handleSelect: React.ChangeEventHandler<HTMLSelectElement> = (e) => {
     const selectedUser = users?.find((user) => user.id === +e.target.value);
-    setSelectedUser(selectedUser as IUser);
+    setSelectedUser(selectedUser as User);
     onSelect(+e.target.value);
   };
 
@@ -45,7 +45,7 @@ const TaskUserSelect: React.FC<IUserSelectProps> = ({
       name="selectUser"
       onChange={handleSelect}
       value={selectedUser?.id ?? "default"}
-      className={className? className : ""}
+      className={className ? className : ""}
     >
       <option value="default" disabled>
         Select user
