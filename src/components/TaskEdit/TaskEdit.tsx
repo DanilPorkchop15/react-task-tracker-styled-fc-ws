@@ -1,4 +1,4 @@
-import { createRef, FC, FormEvent, useEffect, useState } from "react";
+import { createRef, FC, FormEvent, useEffect, useRef, useState } from "react";
 import { TaskEditFormStyled, TaskEditInputStyled, TaskLabelStyled, TaskUserSelectStyled }  from "./TaskEditStyled";
 import ButtonStyled from "../ui/ButtonStyled";
 
@@ -15,10 +15,12 @@ const TaskEdit: FC<TaskEditProps> = ({
 }) => {
   const [userId, setUserId] = useState<number>(0);
 
-  const inputRef = createRef<HTMLInputElement>();
+  const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    inputRef.current!.value = title;
+    if (inputRef.current) {
+      inputRef.current.value = title;
+    }
   }, []); // eslint-disable-line
 
   const handleEdit: (e: FormEvent<HTMLFormElement>) => void = (e) => {
