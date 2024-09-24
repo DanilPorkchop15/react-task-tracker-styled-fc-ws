@@ -1,11 +1,15 @@
 import styled from "styled-components";
-import { AlignBaselineStyled, FlexColStyled, FlexStyled, JustifyBetweenStyled } from "../utils";
-
+import {
+  AlignBaselineStyled,
+  FlexColStyled,
+  FlexStyled,
+  JustifyBetweenStyled,
+} from "../utils";
 
 export const TaskStyled = styled.div`
   ${FlexColStyled}
   ${JustifyBetweenStyled}
-  width: 100%;
+  width: 80dvw;
   gap: 10px;
   margin-bottom: 10px;
   padding: 10px;
@@ -25,17 +29,17 @@ export const TaskSectionStyled = styled.section`
   ${JustifyBetweenStyled}
   ${AlignBaselineStyled}
   flex-grow: 1;
-`
+`;
 
 export const TaskBlockStyled = styled.div`
   ${FlexStyled}
   ${AlignBaselineStyled}
-  width: 100%;
+  ${JustifyBetweenStyled}
   gap: 40px;
-`
+`;
 
 export const TaskActionsStyled = styled.div`
   ${FlexStyled}
   ${AlignBaselineStyled}
   gap: 10px;
-`
+`;

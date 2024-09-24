@@ -3,7 +3,7 @@ import { Task as ITask } from "../../types/Task.types";
 import { fetchUser } from "../../services/User.service";
 import { updateTask } from "../../services/Task.service";
 import TaskEdit from "../TaskEdit/TaskEdit";
-import ButtonStyled from "../ui/ButtonStyled";
+import ButtonStyled from "../ui/Button/ButtonStyled";
 import {
   TaskActionsStyled,
   TaskBlockStyled,

@@ -8,7 +8,7 @@ import {
   fetchTasks,
   updateTask,
 } from "../../services/Task.service";
-import Loader from "../ui/Loader";
+import Loader from "../ui/Loader/Loader";
 import { TaskTrackerStyled, TaskTrackerTitleH1, TaskTrackerTitleH2 } from "./TaskTrackerStyled";
 
 const TaskTracker: FC = () => {
