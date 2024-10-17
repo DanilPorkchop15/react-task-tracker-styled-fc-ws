@@ -1,7 +1,6 @@
-import { FC, useEffect, useState } from "react";
-import { User } from "../../types/User.types";
-import { fetchUsers } from "../../services/User.service";
-import { SelectStyled } from "./TaskUserSelectStyled";
+import React, {FC, useEffect, useState} from "react";
+import {SelectStyled} from "./TaskUserSelectStyled";
+import {User, usersService} from "../../entities/user";
 
 interface UserSelectProps {
   onSelect: (userId: number) => void;
@@ -10,32 +9,24 @@ interface UserSelectProps {
 }
 
 const TaskUserSelect: FC<UserSelectProps> = ({
-  onSelect,
-  defaultValue,
-  className,
-}) => {
-  const [users, setUsers] = useState<User[] | null>(null);
+                                               onSelect,
+                                               defaultValue,
+                                               className,
+                                             }) => {
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
 
   useEffect(() => {
-    fetchUsers()
-      .then((users) => {
-        setUsers(users);
-        const defaultValueUser = users.find(
-          (user) => user.username === defaultValue
-        );
-        if (defaultValueUser) {
-          setSelectedUser(defaultValueUser);
-          onSelect(defaultValueUser.id);
-        }
-      })
-      .catch((e: Error) => {
-        console.log("User fetch error " + e);
-      });
+    const defaultValueUser = usersService.users?.state.find(
+      (user) => user.username === defaultValue
+    );
+    if (defaultValueUser) {
+      setSelectedUser(defaultValueUser);
+      onSelect(defaultValueUser.id);
+    }
   }, []); // eslint-disable-line
 
   const handleSelect: React.ChangeEventHandler<HTMLSelectElement> = (e) => {
-    const selectedUser = users?.find((user) => user.id === +e.target.value);
+    const selectedUser = usersService.users?.state.find((user) => user.id === +e.target.value);
     setSelectedUser(selectedUser as User);
     onSelect(+e.target.value);
   };
@@ -50,8 +41,8 @@ const TaskUserSelect: FC<UserSelectProps> = ({
       <option value="default" disabled>
         Select user
       </option>
-      {users ? (
-        users.map((user) => (
+      {usersService.users ? (
+        usersService.users?.state.map((user) => (
           <option value={user.id} key={user.id}>
             User: {user.username}
           </option>

@@ -1,7 +1,6 @@
 import styled from "styled-components";
-import ButtonStyled from "../ui/Button/ButtonStyled";
-import InputStyled from "../ui/Input/InputStyled";
-import { AlignCenterStyled, FlexColStyled } from "../utils";
+import {Button, Input} from "../../shared/ui";
+import {AlignCenterStyled, FlexColStyled} from "../utils";
 import TaskUserSelect from "../TaskUserSelect/TaskUserSelect";
 
 export const TaskOptionsStyled = styled.div`
@@ -17,13 +16,13 @@ export const TaskOptionsBlockStyled = styled.div`
   width: 100%;
 `;
 
-export const NewTaskInputStyled = styled(InputStyled)`
+export const NewTaskInputStyled = styled(Input)`
   flex-grow: 1;
   border-radius: 10px 0 0 0;
   box-shadow: var(--shadow);
 `;
 
-export const NewTaskButtonStyled = styled(ButtonStyled)`
+export const NewTaskButtonStyled = styled(Button)`
   border-radius: 0 10px 0 0;
   align-self: stretch;
 `;
@@ -32,12 +31,12 @@ export const TaskOptionsUserSelectStyled = styled(TaskUserSelect)`
   max-width: 250px;
 `;
 
-export const MarkAllButtonStyled = styled(ButtonStyled)`
+export const MarkAllButtonStyled = styled(Button)`
   flex-grow: 1;
   border-radius: 0 0 0 10px;
 `;
 
-export const UnmarkAllButtonStyled = styled(ButtonStyled)`
+export const UnmarkAllButtonStyled = styled(Button)`
   flex-grow: 1;
   border-radius: 0 0 10px 0;
 `;

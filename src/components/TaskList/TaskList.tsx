@@ -1,16 +1,12 @@
 import { FC, useState } from "react";
-import { Task as ITask } from "../../types/Task.types";
 import Task from "../Task/Task";
 import { TaskListStyled } from "./TaskListStyled";
-import Pagination from "../ui/Pagination/Pagination";
+import Pagination from "../../shared/ui/Pagination/Pagination";
+import {tasksService} from "../../entities/task";
 
-interface TaskListProps {
-  tasks: ITask[];
-  onDelete: (id: number) => void;
-  onToggle: (id: number) => void;
-}
+import { observer } from "mobx-react-lite";
 
-const TaskList: FC<TaskListProps> = ({ tasks, onDelete, onToggle }) => {
+const TaskList: FC = observer(() => {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const taskPerPage: number = 10;
 
@@ -18,7 +14,7 @@ const TaskList: FC<TaskListProps> = ({ tasks, onDelete, onToggle }) => {
 
   const indexOfLastTask = currentPage * taskPerPage;
   const indexOfFirstTask = indexOfLastTask - taskPerPage;
-  const currentTasks = tasks.slice(indexOfFirstTask, indexOfLastTask);
+  const currentTasks = tasksService.tasks?.state.slice(indexOfFirstTask, indexOfLastTask);
 
   return (
     <TaskListStyled>
@@ -26,22 +22,18 @@ const TaskList: FC<TaskListProps> = ({ tasks, onDelete, onToggle }) => {
         currentTasks.map((task) => (
           <Task
             key={task.id}
-            id={task.id}
-            title={task.title}
-            userId={task.userId}
-            completed={task.completed}
-            onDelete={onDelete}
-            onToggle={onToggle}
+            task={task}
           />
-        ))}
-      <Pagination
-        data={tasks}
+        ))
+      }
+      { tasksService.tasks && <Pagination
+        data={tasksService.tasks.state}
         onPageChange={paginate}
         taskPerPage={taskPerPage}
         currentPage={currentPage}
-      />
+      />}
     </TaskListStyled>
   );
-};
+});
 
 export default TaskList;

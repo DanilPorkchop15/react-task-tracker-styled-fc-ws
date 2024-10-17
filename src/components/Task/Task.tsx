@@ -1,51 +1,34 @@
 import { FC, useState, useEffect } from "react";
-import { Task as ITask } from "../../types/Task.types";
-import { fetchUser } from "../../services/User.service";
-import { updateTask } from "../../services/Task.service";
 import TaskEdit from "../TaskEdit/TaskEdit";
-import ButtonStyled from "../ui/Button/ButtonStyled";
+import {Button} from "../../shared/ui";
+import {Task as ITask, tasksService} from "../../entities/task";
 import {
   TaskActionsStyled,
   TaskBlockStyled,
   TaskSectionStyled,
   TaskStyled,
 } from "./TaskStyled";
+import {usersService} from "../../entities/user/model";
 
-interface TaskProps extends ITask {
-  onDelete: (id: number) => void;
-  onToggle: (id: number) => void;
+interface TaskProps {
+  task: ITask;
 }
 
 const Task: FC<TaskProps> = ({
-  id,
-  title,
-  completed,
-  userId,
-  onDelete,
-  onToggle,
+  task
 }) => {
   const [doEdit, setDoEdit] = useState(false);
   const [username, setUsername] = useState<string | null>(null);
-  const [newTitle, setNewTitle] = useState(title);
 
   useEffect(() => {
-    fetchUser(userId)
+    usersService.getUser(task.userId)
       .then(({ username }) => setUsername(username))
       .catch((e: Error) => console.log("User fetch error " + e));
-  }, [userId]);
+  }, [task.userId]);
 
-  const handleToggle = () => onToggle(id);
-  const handleDelete = () => onDelete(id);
-  const handleEdit = (title: string, userId: number) => {
-    fetchUser(userId)
-      .then(({ username }: { username: string }) => {
-        updateTask({ id, title, completed, userId });
-        setDoEdit(false);
-        setNewTitle(title);
-        setUsername(username);
-      })
-      .catch((e: Error) => console.log("Task edit error " + e));
-  };
+  const handleToggle = () => tasksService.updateTask(task.id, {title: task.title, completed: !task.completed, userId: task.userId});
+  const handleDelete = () => tasksService.deleteTask(task.id);
+
 
   const toggleEdit = () => setDoEdit(!doEdit);
 
@@ -53,8 +36,8 @@ const Task: FC<TaskProps> = ({
     <TaskStyled>
       <TaskSectionStyled>
         <TaskBlockStyled>
-          <span>{id}</span>
-          <p>{newTitle}</p>
+          <span>{task.id}</span>
+          <p>{task.title}</p>
         </TaskBlockStyled>
 
         <TaskBlockStyled>
@@ -68,15 +51,15 @@ const Task: FC<TaskProps> = ({
               name="completed"
               id="completed"
               onChange={handleToggle}
-              checked={completed}
+              checked={task.completed}
             />
             <TaskActionsStyled>
-              <ButtonStyled onClick={toggleEdit} disabled={username === null}>
+              <Button onClick={toggleEdit} disabled={username === null}>
                 {doEdit ? "Cancel" : "Edit"}
-              </ButtonStyled>
-              <ButtonStyled $danger onClick={handleDelete}>
+              </Button>
+              <Button $danger onClick={handleDelete}>
                 Delete
-              </ButtonStyled>
+              </Button>
             </TaskActionsStyled>
           </TaskBlockStyled>
         </TaskBlockStyled>
@@ -84,7 +67,7 @@ const Task: FC<TaskProps> = ({
 
       <TaskSectionStyled>
         {doEdit && (
-          <TaskEdit onEdit={handleEdit} title={title} username={username} />
+          <TaskEdit task={task} username={username} />
         )}
       </TaskSectionStyled>
     </TaskStyled>

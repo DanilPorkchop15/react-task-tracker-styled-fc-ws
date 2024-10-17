@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { FlexCenterStyled, FlexColStyled } from "../utils";
 import TaskUserSelect from "../TaskUserSelect/TaskUserSelect";
-import InputStyled from "../ui/Input/InputStyled";
+import {Input} from "../../shared/ui";
 
 export const TaskEditFormStyled = styled.form`
   ${FlexColStyled}
@@ -36,6 +36,6 @@ export const TaskUserSelectStyled = styled(TaskUserSelect)`
   border-radius: 10px;
 `;
 
-export const TaskEditInputStyled = styled(InputStyled)`
+export const TaskEditInputStyled = styled(Input)`
   width: 100%;
 `;

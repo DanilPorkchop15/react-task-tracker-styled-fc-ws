@@ -8,19 +8,20 @@ import {
   TaskOptionsUserSelectStyled,
   UnmarkAllButtonStyled,
 } from "./TaskOptionsStyled";
+import {tasksService} from "../../entities/task";
 
-interface TaskProps {
-  onAdd: (value: string, userId: number) => void;
-  onMarkEvent: (value: boolean) => void;
-}
 
-const TaskOptions: FC<TaskProps> = ({ onAdd, onMarkEvent }) => {
+const TaskOptions: FC = () => {
   const [value, setValue] = useState<string>("");
   const [userId, setUserId] = useState<number | null>(null);
 
-  const handleAdd = () => {
+  const handleAdd = async () => {
     if (value.length > 0 && userId) {
-      onAdd(value, userId);
+      await tasksService.createTask({
+        title: value,
+        userId,
+        completed: false
+      })
       setValue("");
     } else {
       alert("Введите текст и автора заметки!");
@@ -54,10 +55,10 @@ const TaskOptions: FC<TaskProps> = ({ onAdd, onMarkEvent }) => {
       </TaskOptionsBlockStyled>
 
       <TaskOptionsBlockStyled>
-        <MarkAllButtonStyled $success onClick={() => onMarkEvent(true)}>
+        <MarkAllButtonStyled $success onClick={() => tasksService.markAll(true)}>
           Check all
         </MarkAllButtonStyled>
-        <UnmarkAllButtonStyled $danger onClick={() => onMarkEvent(false)}>
+        <UnmarkAllButtonStyled $danger onClick={() => tasksService.markAll(false)}>
           Uncheck all
         </UnmarkAllButtonStyled>
       </TaskOptionsBlockStyled>

@@ -1,16 +1,15 @@
 import { FC, FormEvent, useEffect, useRef, useState } from "react";
 import { TaskEditFormStyled, TaskEditInputStyled, TaskLabelStyled, TaskUserSelectStyled }  from "./TaskEditStyled";
-import ButtonStyled from "../ui/Button/ButtonStyled";
+import {Button} from "../../shared/ui";
+import {Task, tasksService} from "../../entities/task";
 
 interface TaskEditProps {
-  onEdit: (title: string, userId: number) => void;
-  title: string;
+  task: Task;
   username: string | null;
 }
 
 const TaskEdit: FC<TaskEditProps> = ({
-  onEdit,
-  title,
+  task,
   username,
 }) => {
   const [userId, setUserId] = useState<number>(0);
@@ -19,18 +18,18 @@ const TaskEdit: FC<TaskEditProps> = ({
 
   useEffect(() => {
     if (inputRef.current) {
-      inputRef.current.value = title;
+      inputRef.current.value = task.title;
     }
   }, []); // eslint-disable-line
 
-  const handleEdit: (e: FormEvent<HTMLFormElement>) => void = (e) => {
+  const handleEdit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const inputElement = inputRef.current;
     if (!inputElement) {
       return;
     }
     const newTitle = inputElement.value;
-    onEdit(newTitle, userId);
+    await tasksService.updateTask(task.id, { title: newTitle, userId, completed: task.completed });
   };
 
   const handleSelect: (userId: number) => void = (userId: number) => {
@@ -55,9 +54,9 @@ const TaskEdit: FC<TaskEditProps> = ({
             defaultValue={username}
           />
         </TaskLabelStyled>
-        <ButtonStyled type="submit">
+        <Button type="submit">
           Edit
-        </ButtonStyled>
+        </Button>
       </TaskEditFormStyled>
   )
 }
