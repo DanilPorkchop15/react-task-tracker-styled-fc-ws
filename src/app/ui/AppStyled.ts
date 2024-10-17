@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { FlexColStyled, FlexCenterStyled } from "./components/utils";
+import { FlexColStyled, FlexCenterStyled } from "../../components/utils";
 
 export const AppStyled = styled.div`
   ${FlexColStyled}
