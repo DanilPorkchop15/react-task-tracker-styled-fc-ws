@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const ButtonStyled = styled.button<{ $danger?: boolean; $success?: boolean }>`
+export const Button = styled.button<{ $danger?: boolean; $success?: boolean }>`
   background-color: ${({ $danger, $success }) =>
     $danger
       ? "var(--danger-color)"
@@ -23,5 +23,3 @@ const ButtonStyled = styled.button<{ $danger?: boolean; $success?: boolean }>`
     filter: grayscale(1) brightness(0.5);
   }
 `;
-
-export default ButtonStyled;

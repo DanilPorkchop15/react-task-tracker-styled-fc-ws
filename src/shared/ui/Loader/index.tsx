@@ -1,4 +1,5 @@
 import styled, {keyframes} from "styled-components";
+import React from "react";
 
 const rotate = keyframes`
   100% {
@@ -34,5 +35,3 @@ export const Loader: React.FC = styled.div`
   filter: blur(3px);
   animation: 2s ${rotate} linear infinite;
 `;
-
-export default Loader;
